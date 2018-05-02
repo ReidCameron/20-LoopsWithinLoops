@@ -3,8 +3,8 @@ This project demonstrates NESTED LOOPS (i.e., loops within loops)
 in the context of TWO-DIMENSIONAL GRAPHICS.
 
 Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         their colleagues and Cameron Reid.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
 
@@ -80,9 +80,28 @@ def draw_L(window, circle, r, c):
     and m and n are small, positive integers.
     """
     # ------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE: 2. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
+    temp_circle = rg.Circle(circle.center,circle.radius)
+    center_pt = circle.center
+    for _ in range(3):
+        for _ in range(r):
+            new_circle = rg.Circle(center_pt,circle.radius)
+            new_circle.fill_color = circle.fill_color
+            new_circle.attach_to(window)
+            window.render(0.1)
+            center_pt.move_by(0,2*circle.radius)
+        center_pt.move_by(2*circle.radius,-2*r*circle.radius)
+    center_pt.move_by(0,2*(r-3)*circle.radius)
+    for _ in range (3):
+        for _ in range(c-3):
+            new_circle = rg.Circle(center_pt,circle.radius)
+            new_circle.fill_color = circle.fill_color
+            new_circle.attach_to(window)
+            window.render(0.1)
+            center_pt.move_by(2*circle.radius,0)
+        center_pt.move_by(-2*(c-3)*circle.radius,2*circle.radius)
 
 
 def run_test_draw_wall_on_right():
@@ -121,10 +140,17 @@ def draw_wall_on_right(rectangle, n, window):
     and n is a small, positive integer.
     """
     # ------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
+    # DONE: 3. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
-
+    rect_copy = rg.Rectangle(rectangle.corner_1, rectangle.corner_2)
+    for k in range(n):
+        for i in range(k+1):
+            rect = rg.Rectangle(rect_copy.corner_1,rect_copy.corner_2)
+            rect.move_by(-i*rectangle.get_width(),0)
+            rect.attach_to(window)
+            window.render(0.1)
+        rect_copy.move_by(0,rectangle.get_height())
 
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
